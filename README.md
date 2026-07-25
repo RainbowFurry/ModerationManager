@@ -21,6 +21,7 @@
 ## 📑 Table of Contents
 
 - [✨ Features](#-features)
+- [🖼️ Gallery](#-gallery)
 - [💾 System Requirements](#-system-requirements)
 - [⬇️ Installation](#️-installation)
 - [🖥️ GUI Menus](#️-gui-menus)
@@ -34,7 +35,6 @@
   - [🛡️ Protection Mechanisms in Detail](#️-protection-mechanisms-in-detail)
 - [🧩 Architecture](#-architecture)
 - [🛠️ Build Instructions](#️-build-instructions)
-- [🖼️ Gallery](#-gallery)
 - [🩺 Troubleshooting](#-troubleshooting)
 - [🗺️ Roadmap](#️-roadmap)
 - [🤝 Support](#-support)
@@ -57,6 +57,16 @@
 | **Monitoring** | Alt/VPN join notifications, IP-change alerts, raid alerts, OP change alerts, command monitor alerts, punishment alerts (blocked swear/link/spam) |
 | **Database** | Persistent SQLite via HikariCP connection pooling (thread-safe) — tables: Punishments, PlayerProfiles, IPLogs, OPLogs |
 | **International** | MiniMessage + Adventure API instead of legacy chat color codes (gradients, hover, etc.), 100% configurable texts & GUIs |
+
+---
+
+## 🖼️ Gallery
+
+<p align="center">
+<img width="704" height="505" alt="image" src="https://github.com/user-attachments/assets/201cf023-4a01-4498-9cd4-fba8f67a3fc5" />
+<img width="693" height="518" alt="image" src="https://github.com/user-attachments/assets/0ece47db-abda-4039-a593-db3c174cfb22" />
+<img width="749" height="524" alt="image" src="https://github.com/user-attachments/assets/5eca0ce7-2ffd-4e23-acf6-fe1586b4cdc8" />
+</p>
 
 ---
 
@@ -472,16 +482,6 @@ Or with Maven Wrapper (included in the project):
 - 🌈 **MiniMessage / Adventure API** — Paper-native
 - 📊 **bStats 3.0.2** — Optional usage statistics (anonymous, toggleable)
 - 🔍 **slf4j-api + slf4j-simple** — Logging bridge for HikariCP
-
----
-
-## 🖼️ Gallery
-
-<p align="center">
-<img width="704" height="505" alt="image" src="https://github.com/user-attachments/assets/201cf023-4a01-4498-9cd4-fba8f67a3fc5" />
-<img width="693" height="518" alt="image" src="https://github.com/user-attachments/assets/0ece47db-abda-4039-a593-db3c174cfb22" />
-<img width="749" height="524" alt="image" src="https://github.com/user-attachments/assets/5eca0ce7-2ffd-4e23-acf6-fe1586b4cdc8" />
-</p>
 
 ---
 
