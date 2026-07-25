@@ -1,0 +1,834 @@
+# =====================================================
+#  ModerationManager - Konfiguration
+#  Alles ist hier vollständig einstellbar
+# =====================================================
+
+general:
+  # Sprache (de = Deutsch, en = English)
+  language: de
+  # Prefix für alle Nachrichten (mit MiniMessage/Gradient)
+  prefix: "<gradient:#6a11cb:#2575fc>Moderation</gradient><dark_gray> • "
+  # Soll bStats aktiviert sein?
+  bstats: true
+  # Maximale Anzahl an Strafen die in /playerinfo angezeigt werden
+  max-shown-punishments: 20
+
+# =====================================================
+#  Datenbank (SQLite)
+# =====================================================
+database:
+  # Dateiname der SQLite-Datenbank (im Plugin-Ordner)
+  filename: "moderation.db"
+
+# =====================================================
+#  Alt Account Erkennung
+# =====================================================
+alt-accounts:
+  enabled: true
+  auto-detect: true
+  max-accounts-per-ip: 3
+  log-ip-changes: true
+  notify-staff-on-alt-join: true
+  ignored-ips: []
+  vpn-detection: true
+  vpn-threshold: 70
+  vpn-autoban: false
+  vpn-ban-reason: "VPN/Proxy Verbindungen sind nicht erlaubt!"
+  vpn-ban-duration: -1
+
+# =====================================================
+#  Anti Spam
+# =====================================================
+anti-spam:
+  enabled: true
+  message-delay: 800
+  messages-per-minute: 6
+  caps-lock:
+    enabled: true
+    percentage-threshold: 60
+    min-length: 5
+    auto-correct: true
+  repeat-protection:
+    enabled: true
+    max-repeats: 2
+  flood-protection:
+    enabled: true
+    max-same-characters: 5
+  auto-punishments:
+    violations:
+      - warns: 3
+        action: mute
+        duration-minutes: 10
+        reason: "Spam Verstoß"
+      - warns: 5
+        action: mute
+        duration-minutes: 60
+        reason: "Fortgesetzter Spam"
+      - warns: 8
+        action: ban
+        duration-minutes: 1440
+        reason: "Extremer Spam"
+  messages:
+    too-fast: "<red>Du schreibst zu schnell! Bitte warte einen Moment."
+    too-many: "<red>Du hast zu viele Nachrichten in kurzer Zeit gesendet!"
+    caps-lock: "<red>Bitte verwende nicht so viele Großbuchstaben!"
+    repeat: "<red>Bitte wiederhole nicht ständig die gleiche Nachricht!"
+    flood: "<red>Bitte verwende nicht so viele gleiche Zeichen!"
+
+# =====================================================
+#  Link Schutz
+# =====================================================
+link-protection:
+  enabled: true
+  mode: WHITELIST
+  whitelist:
+    - "youtube.com"
+    - "youtu.be"
+    - "twitch.tv"
+    - "discord.gg"
+    - "minecraft.net"
+    - "curseforge.com"
+    - "modrinth.com"
+    - "spigotmc.org"
+    - "papermc.io"
+    - "rainbowfurry.com"
+  blacklist:
+    - "malicious-site.example"
+  block-ip-links: true
+  bypass-permission: "moderation.bypass.links"
+  auto-punishments:
+    enabled: true
+    first-offense:
+      action: warn
+      reason: "Unerlaubter Link"
+    second-offense:
+      action: mute
+      duration-minutes: 15
+      reason: "Wiederholtes Senden von unerlaubten Links"
+    third-offense:
+      action: ban
+      duration-minutes: 1440
+      reason: "Unerlaubte Links - Trotz Warnung"
+  messages:
+    blocked: "<red>Links sind nicht erlaubt! Bitte verwende nur vertrauenswürdige Seiten."
+
+# =====================================================
+#  Beleidigungs Schutz / Anti Swear
+# =====================================================
+anti-swear:
+  enabled: true
+  mode: BLOCK
+  blacklist:
+    - "hurensohn"
+    - "wichser"
+    - "arschloch"
+    - "miststück"
+    - "schlampe"
+    - "spast"
+    - "spasti"
+    - "idiot"
+    - "dummkopf"
+    - "depp"
+    - "sau"
+    - "hure"
+    - "fick"
+    - "ficken"
+    - "cunt"
+    - "nigger"
+    - "nigga"
+    - "bitch"
+    - "bastard"
+    - "motherfucker"
+    - "asshole"
+    - "retard"
+  replacement: "****"
+  check-commands: true
+  checked-commands:
+    - "msg"
+    - "tell"
+    - "r"
+    - "w"
+    - "whisper"
+    - "me"
+    - "say"
+  auto-punishments:
+    enabled: true
+    violations:
+      - warns: 2
+        action: warn
+        reason: "Beleidigung"
+      - warns: 4
+        action: mute
+        duration-minutes: 30
+        reason: "Mehrfache Beleidigung"
+      - warns: 6
+        action: ban
+        duration-minutes: 1440
+        reason: "Extreme Beleidigung trotz Warnung"
+  messages:
+    blocked: "<red>Deine Nachricht enthält beleidigende Inhalte und wurde blockiert!"
+    replaced: "<gray>(Beleidigung wurde entfernt)"
+
+# =====================================================
+#  DDoS / Join Schutz
+# =====================================================
+ddos-protection:
+  enabled: true
+  max-connections-per-ip: 3
+  joins-per-second: 1
+  total-joins-per-minute: 60
+  packet-rate-limit:
+    enabled: true
+    max-packets-per-second: 50
+  whitelisted-ips:
+    - "127.0.0.1"
+    - "localhost"
+  blacklisted-ips: []
+  temp-block-time: 30
+  messages:
+    connection-limit: "<red>Zu viele Verbindungsversuche von deiner IP! Bitte warte %time% Minuten."
+    too-many-joins: "<red>Server aktuell überlastet! Bitte versuche es später erneut."
+
+# =====================================================
+#  Raid Erkennung
+# =====================================================
+raid-detection:
+  enabled: true
+  threshold: 15
+  timeframe-seconds: 10
+  auto-action: LOCKDOWN
+  action-duration: 10
+  notify-staff: true
+  ban-new-players-during-raid: false
+  messages:
+    raid-detected: "<red><b>RAID ERKANNT!</b></red> <gray>Server wird vorübergehend geschützt."
+    raid-ended: "<green>RAID vorbei! Schutz wird aufgehoben."
+    lockdown: "<red>Server befindet sich im RAID Schutz! Bitte versuche es später nochmal."
+
+# =====================================================
+#  OP Abuse Schutz
+# =====================================================
+op-abuse:
+  enabled: true
+  log-op-changes: true
+  blocked-op-commands:
+    - "stop"
+    - "deop"
+    - "op"
+  allowed-op-players: []
+  auto-deop: true
+  monitored-commands:
+    - "gamemode"
+    - "give"
+    - "fill"
+    - "summon"
+    - "ban"
+    - "pardon"
+    - "deop"
+    - "op"
+    - "stop"
+  notify-staff: true
+  messages:
+    blocked-command: "<red>Dieser Befehl ist für OP-Spieler gesperrt!"
+    op-removed: "<red>Dein OP-Status wurde entfernt! Du bist nicht in der OP-Whitelist."
+
+# =====================================================
+#  Automatische Punishment Regeln
+# =====================================================
+auto-rules:
+  rules: []
+  warn-thresholds:
+    mute-at-warns: 5
+    ban-at-warns: 10
+    mute-duration-minutes: 30
+    ban-duration-minutes: 4320
+
+# =====================================================
+#  AUTO MOD (Automatischer Modus)
+#  Ein zentraler Schalter für alle automatischen
+#  Moderations-Aktionen, falls mal kein Staff online ist.
+#  Jede Kategorie kann einzeln an/aus geschaltet werden.
+#  Regeln (rules) sind voll konfigurierbar.
+#  Aktionen: warn | mute | tempmute | ban | tempban | kick
+# =====================================================
+auto-mod:
+  # Haupt-Schalter: deaktivieren = KEINE automatischen Strafen mehr!
+  enabled: true
+
+  # Name der als "Strafender" angezeigt wird (z.B. Ban-Screen)
+  operator-name: "AutoMod"
+
+  # Spieler mit dieser Permission werden von AutoMod NICHT bestraft (Staff Mods + OP sind immer frei)
+  bypass-permission: "moderation.automod.bypass"
+
+  # Staff Benachrichtigungen im Staff-Chat / Konsole
+  notify-staff: true
+
+  # ---------------------------------------------------
+  #  Kategorien: Jede kann einzeln DEAKTIVIERT werden
+  #  Jede Regel (rules) wird anhand at-violations (Anzahl) ausgelöst.
+  #  Die am höchsten passende Regel (größte at-violations <= aktueller Counter)
+  #  wird pro Ausführung genommen.
+  #  cooldown-minutes: wie lang nach dieser Regel erneut ausgeführt werden darf,
+  #                     bevor sie wieder triggern kann (0 = nie wiederholen solange count noch passt)
+  # ---------------------------------------------------
+  categories:
+
+    # 1) Chat: Beleidigungen (anti-swear blockierte Nachrichten
+    chat-swear:
+      enabled: true
+      rules:
+        - at-violations: 1
+          action: warn
+          reason: "Automatische Verwarnung bei Beleidigung"
+          duration-minutes: -1
+          cooldown-minutes: 0
+        - at-violations: 3
+          action: mute
+          reason: "Mute nach mehrfacher Beleidigung"
+          duration-minutes: 30
+          cooldown-minutes: 0
+        - at-violations: 5
+          action: ban
+          reason: "Automatischer Ban: Mehrfache Beleidigung trotz Verwarnung"
+          duration-minutes: 1440
+          cooldown-minutes: 0
+
+    # 2) Chat: Werbung / Unerlaubte Links
+    chat-links:
+      enabled: true
+      rules:
+        - at-violations: 1
+          action: warn
+          reason: "Unerlaubter Link / Werbung"
+          duration-minutes: -1
+          cooldown-minutes: 0
+        - at-violations: 2
+          action: mute
+          reason: "Wiederholter Versuch von Werbung / Links"
+          duration-minutes: 15
+          cooldown-minutes: 0
+        - at-violations: 3
+          action: ban
+          reason: "Automatischer Ban: Werbung trotz Warnung"
+          duration-minutes: 1440
+          cooldown-minutes: 0
+
+    # 3) Chat: Spam (zu schnell / Caps / Flood / Wiederholungen)
+    chat-spam:
+      enabled: true
+      rules:
+        - at-violations: 2
+          action: warn
+          reason: "Spam / Chat Missbrauch"
+          duration-minutes: -1
+          cooldown-minutes: 0
+        - at-violations: 4
+          action: mute
+          reason: "Fortgesetzter Spam"
+          duration-minutes: 10
+          cooldown-minutes: 0
+        - at-violations: 7
+          action: ban
+          reason: "Extremer Spam trotz Warnungen"
+          duration-minutes: 1440
+          cooldown-minutes: 0
+
+    # 4) Warn-Schwellwerte: Auto-Mute / Auto-Ban nach X aktiven Warnungen (z.B. von Staff / AutoMod)
+    #    at-violations = ANZAHL der aktiven Warnungen des Spielers
+    warn-thresholds:
+      enabled: true
+      rules:
+        - at-violations: 5
+          action: mute
+          reason: "Automatischer Mute nach 5 aktiven Warnungen"
+          duration-minutes: 30
+          cooldown-minutes: 60
+        - at-violations: 10
+          action: ban
+          reason: "Automatischer Ban nach 10 aktiven Warnungen"
+          duration-minutes: 4320
+          cooldown-minutes: 0
+
+    # 5) VPN / Proxy Erkennung (wählt
+    vpn:
+      enabled: true
+      rules:
+        - at-violations: 1
+          action: ban
+          reason: "VPN/Proxy Verbindungen sind nicht erlaubt!"
+          duration-minutes: -1
+          cooldown-minutes: 0
+
+    # ---------------------------------------------------
+    #  Weitere Kategorien einfach hier einfach weitere
+    #  Füge einfach "categories: <name>:" an und definiere rules!
+    #  Weitere Beispiele:
+    #   - command-spam (kann per CommandPreProcessEvent ausgelöst werden)
+    #   - griefing (wenn ein Schutz-Plugin Meldung schickt)
+    #   - illegal-items (bei illegale Items im Inventar)
+    # ---------------------------------------------------
+
+# =====================================================
+#  Ban / Mute / Kick Einstellungen
+# =====================================================
+punishments:
+  ban-screen: |
+    <gradient:#ff0000:#b71c1c><bold>GEBANNT</bold></gradient>
+    <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</dark_gray>
+    <white>Grund:</white> <red>%reason%</red>
+    <white>Gebannt von:</white> <gold>%operator%</gold>
+    <white>Ban-ID:</white> <gray>#%id%</gray>
+    <white>Dauer:</white> <aqua>%duration%</aqua>
+    <white>Unban am:</white> <yellow>%unban_date%</yellow>
+    <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</dark_gray>
+    <white>Entbannungs-Antrag auf unserem Discord:</white>
+    <gradient:#5865F2:#eb459e>discord.gg/rainbowfurry</gradient>
+  kick-screen: |
+    <gradient:#ff6f00:#ff3d00><bold>GEKICKT</bold></gradient>
+    <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</dark_gray>
+    <white>Grund:</white> <red>%reason%</red>
+    <white>Gekickt von:</white> <gold>%operator%</gold>
+    <dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</dark_gray>
+  mute-message: |
+    <gradient:#7b1fa2:#00bcd4><bold>MUTE</bold></gradient>
+    <red>Du bist aktuell gemutet!</red>
+    <gray>Grund: %reason%</gray>
+    <gray>Unmute am: %unmute_date%</gray>
+  duration-formats: true
+
+  # --------------------------------------------------
+  #  Vorgefertigte Straf-Gründe (für GUI + Quick-Actions)
+  #  Diese können im /mod <Spieler> punish GUI ausgewählt werden
+  # --------------------------------------------------
+  presets:
+    reasons:
+      - "Spam / Chat Missbrauch"
+      - "Beleidigung / Beleidigung anderer Spieler"
+      - "Werbung (IP / Server)"
+      - "Trolling / Team-Grief"
+      - "Bug Ausnutzung"
+      - "Cheating / Hacking"
+      - "Bannumgehung / Alt-Account"
+      - "Sonstiges - siehe Notizen"
+
+    # --------------------------------------------------
+    #  Vorgefertigte Dauer-Templates
+    #  label = Name im GUI
+    #  duration-ms = Dauer in Millisekunden (für dauerhaft: -1 oder PERM)
+    #  material = Item-Material im GUI (optional)
+    # --------------------------------------------------
+    durations:
+      - label: "5 Min"
+        duration-ms: 300000
+        material: "GOLD_INGOT"
+      - label: "15 Min"
+        duration-ms: 900000
+        material: "COPPER_BLOCK"
+      - label: "1 Stunde"
+        duration-ms: 3600000
+        material: "GOLD_BLOCK"
+      - label: "6 Stunden"
+        duration-ms: 21600000
+        material: "LAPIS_BLOCK"
+      - label: "1 Tag"
+        duration-ms: 86400000
+        material: "IRON_BLOCK"
+      - label: "7 Tage"
+        duration-ms: 604800000
+        material: "COAL_BLOCK"
+      - label: "30 Tage"
+        duration-ms: 2592000000
+        material: "REDSTONE_BLOCK"
+      - label: "Permanent"
+        duration-ms: -1
+        material: "BEDROCK"
+
+# =====================================================
+#  Staff Chat
+# =====================================================
+staff-chat:
+  enabled: true
+  format: "<gradient:#00c6ff:#0072ff>Staff</gradient> <dark_gray>|</dark_gray> <gold>%player%</gold><dark_gray>:</dark_gray> <white>%message%"
+  permission: "moderation.staffchat"
+  toggle-mode: true
+  toggle-indicator: "<green>✓</green>"
+
+# =====================================================
+#  Vanish
+# =====================================================
+vanish:
+  enabled: true
+  effects:
+    hide-from-tablist: true
+    god-mode: true
+    no-drops: true
+    silent: true
+  messages:
+    vanished: "<gray>Du bist jetzt <gradient:#9d50bb:#6e48aa>unsichtbar</gradient>."
+    unvanished: "<gray>Du bist jetzt <gradient:#56ab2f:#a8e063>sichtbar</gradient>."
+
+# =====================================================
+#  PlayerInfo Format
+# =====================================================
+playerinfo:
+  header: |
+    <gradient:#6a11cb:#2575fc><bold>═════════════ PLAYER INFO ═════════════</bold></gradient>
+    <gold>Name:</gold> <white>%name%</white>      <gold>UUID:</gold> <white>%uuid%</white>
+    <gold>Status:</gold> %status%
+    <gold>Erster Join:</gold> <white>%first_join%</white>
+    <gold>Letzter Login:</gold> <white>%last_login%</white>
+    <gold>Spielzeit:</gold> <white>%playtime%</white>
+    <gradient:#6a11cb:#2575fc>───────────────────────────────────────</gradient>
+  summary:
+    format: "<aqua>Bans:</aqua> <gold>%bans%</gold>   <aqua>Mutes:</aqua> <gold>%mutes%</gold>   <aqua>Warns:</aqua> <gold>%warns%</gold>   <aqua>Kicks:</aqua> <gold>%kicks%</gold>"
+  history-format: |
+    <gradient:#6a11cb:#2575fc>───────────────────────────────────────</gradient>
+    <gradient:#6a11cb:#2575fc><bold>STRAFEN HISTORIE (%anzahl%):</bold></gradient>
+    <gray>%history_list%</gray>
+  alt-accounts:
+    header: "<gradient:#ff6f00:#ff3d00>──────── ALT ACCOUNTS ────────</gradient>"
+    format: "  <dark_gray>»</dark_gray> <red>%name%</red> <gray>(IP: %ip%, zuletzt: %last_seen%)</gray>"
+  footer: |
+    <gradient:#6a11cb:#2575fc><bold>═══════════════════════════════════════</bold></gradient>
+
+# =====================================================
+#  Benachrichtigungen (für Staff)
+# =====================================================
+notifications:
+  sound: true
+  enabled:
+    ban: true
+    kick: true
+    mute: true
+    warn: true
+    alt-join: true
+    op-change: true
+    ip-change: true
+    raid: true
+    vpn-detect: true
+    command-monitor: true
+    blocked-swear: true
+    blocked-link: true
+    blocked-spam: true
+    punishment-deleted: true
+  sound-type: "ENTITY_EXPERIENCE_ORB_PICKUP"
+
+# =====================================================
+#  GUI / Inventar-Menü Einstellungen
+#  Alle Titel, Item-Materialien und Texte sind editierbar
+# =====================================================
+gui:
+  # Generelle GUI Einstellungen
+  fill-border-material: "GRAY_STAINED_GLASS_PANE"
+  fill-glass-material: "BLACK_STAINED_GLASS_PANE"
+
+  # Gemeinsame Items / Buttons
+  items:
+    back-arrow:
+      material: "ARROW"
+      name: "<gold>← Zurück"
+      lore:
+        - "<gray>Zurück zum vorherigen Menü"
+    close-barrier:
+      material: "BARRIER"
+      name: "<dark_red>❌ Schließen"
+      lore:
+        - "<gray>Menü ohne Aktion schließen"
+    reset-selection:
+      material: "RED_CONCRETE"
+      name: "<reset><red>❌ Auswahl zurücksetzen"
+      lore:
+        - "<yellow>Klicken: Alles zurücksetzen"
+    apply-enabled:
+      material: "EMERALD_BLOCK"
+      name: "<green><bold>✔ BESTRAFUNG DURCHFÜHREN"
+      lore-apply:
+        - "<yellow>Klicken: <green>Bestrafung anwenden!"
+        - ""
+        - "<gray>Ziel: <white>%target%"
+        - "<gray>Typ: %type%"
+        - "<gray>Dauer: %duration%"
+        - "<gray>Grund: %reason%"
+    apply-disabled:
+      material: "REDSTONE_BLOCK"
+      name: "<red><bold>✘ Bitte erst alles auswählen"
+      lore:
+        - "<dark_red>Bitte wähle:"
+        - "<dark_red>1. Straf-Typ (oben: Zeile 1)"
+        - "<dark_red>2. Dauer (Zeile 2-3: bei Mute/Ban)"
+        - "<dark_red>3. Grund (Zeile 4-5: Mitte)"
+    status-book:
+      material: "WRITABLE_BOOK"
+      name: "<gold>📝 Aktuelle Auswahl"
+      lore-line-type: "<gray>Typ: %type%"
+      lore-line-duration: "<gray>Dauer: %duration%"
+      lore-line-reason: "<gray>Grund: %reason%"
+      lore-line-target: "<gray>Ziel: <white>%target%"
+    skull-default-name: "<yellow>%name% <gray>(Profil)"
+    skull-lore-count: "<gray>Strafen gesamt: <yellow>%count%"
+
+  # ---------------- Hauptmenü /mod ----------------
+  main-menu:
+    title: "<gradient:#6a11cb:#2575fc><bold>⚖️ Moderation Menü</bold></gradient>"
+    rows: 3
+    items:
+      player-select:
+        material: "PLAYER_HEAD"
+        name: "<aqua>🎮 Spieler Verwaltung"
+        lore:
+          - "<gray>Spieler suchen, bestrafen,"
+          - "<gray>Historie ansehen, Alt-Accounts"
+      chat-control:
+        material: "OAK_SIGN"
+        name: "<green>💬 Chat Steuerung"
+        lore:
+          - "<gray>Clear, Lock, Slowmode,"
+          - "<gray>Staff-Chat Toggle"
+      vanish:
+        material: "GRAY_DYE"
+        name: "<purple>👻 Vanish"
+        lore:
+          - "<gray>Werde für normale Spieler"
+          - "<gray>unsichtbar"
+
+  # ---------------- Spieler-Selektor ----------------
+  player-selector:
+    title: "<gradient:#00bcd4:#2196f3><bold>📋 Spieler wählen</bold></gradient>"
+    rows: 6
+    offline-skull-material: "SKELETON_SKULL"
+    lore:
+      online:
+        - "<green>✔ ONLINE"
+        - ""
+        - "<gray>Klicken: Spieler verwalten"
+      offline:
+        - "<gray>⚫ OFFLINE"
+        - ""
+        - "<gray>Klicken: Spieler verwalten"
+
+  # ---------------- Spieler-Infos ----------------
+  player-info:
+    title: "<gradient:#3f51b5:#00bcd4><bold>ℹ️ Spieler Info: %name%</bold></gradient>"
+    rows: 5
+    items:
+      punish:
+        material: "DIAMOND_SWORD"
+        name: "<red>⛨ Bestrafen"
+        lore:
+          - "<yellow>Klicken: <red>Bestrafungs-Menü öffnen"
+      history:
+        material: "BOOKSHELF"
+        name: "<aqua>📜 Straf-Historie"
+        lore:
+          - "<yellow>Klicken: <white>Alle alten Strafen sehen"
+      alt-accounts:
+        material: "CHAIN_COMMAND_BLOCK"
+        name: "<orange>🔗 Alt-Accounts"
+        lore:
+          - "<yellow>Klicken: <white>Accounts mit gleicher IP sehen"
+    lore-header:
+      name: "<aqua>📌 Name: <white>%name%"
+      uuid: "<gray>UUID: <white>%uuid%"
+      ip: "<aqua>🌐 IP: <white>%ip%"
+      firstjoin: "<aqua>📅 Erster Join: <white>%date%"
+      lastlogin: "<aqua>🚪 Letzter Login: <white>%date%"
+      playtime: "<aqua>⏱️ Spielzeit: <white>%time%"
+      bans: "<gold>📊 Bans: <red>%count%"
+      mutes: "<gold>📊 Mutes: <dark_purple>%count%"
+      warns: "<gold>📊 Warns: <yellow>%count%"
+      kicks: "<gold>📊 Kicks: <white>%count%"
+      active-ban: "<red><bold>⚠ AKTIV GEBANNT"
+      active-ban-lines:
+        - "<gray>ID: <white>#%id%"
+        - "<gray>Grund: <white>%reason%"
+        - "<gray>Von: <white>%op%"
+        - "<gray>Bis: <white>%date%"
+      active-mute: "<dark_purple><bold>⚠ AKTIV GEMUTET"
+      active-mute-lines:
+        - "<gray>ID: <white>#%id%"
+        - "<gray>Grund: <white>%reason%"
+        - "<gray>Von: <white>%op%"
+        - "<gray>Bis: <white>%date%"
+
+  # ---------------- Straf-Menü /punish ----------------
+  punish-menu:
+    title: "<gradient:#f44336:#ff9800><bold>⚔️ Strafen: %name%</bold></gradient>"
+    rows: 6
+    # Straf-Typen Buttons (Zeile 1: Slots 10, 12, 14, 16)
+    type-buttons:
+      warn:
+        material: "YELLOW_BANNER"
+        name: "<yellow>⚠️ Warnung"
+        lore:
+          - "<gray>Verwarnung ohne Einschränkung"
+          - "<gray>Wird in Historie eingetragen"
+      kick:
+        material: "IRON_BOOTS"
+        name: "<white>🥾 Kick"
+        lore:
+          - "<gray>Spieler wird vom Server geworfen"
+          - "<gray>Keine Dauer nötig (einmalig)"
+      mute:
+        material: "MUSIC_DISC_CHIRP"
+        name: "<aqua>🔇 Mute"
+        lore:
+          - "<gray>Spieler kann nicht mehr chatten"
+          - "<gray>Braucht Zeit-Dauer (unten auswählen)"
+      ban:
+        material: "IRON_DOOR"
+        name: "<red>🚫 Ban"
+        lore:
+          - "<gray>Spieler kann nicht mehr joinen"
+          - "<gray>Braucht Zeit-Dauer (unten auswählen)"
+    # Dauer-Item Texte
+    duration-item:
+      prefix-selected: "<green>✔ "
+      prefix-unselected: "<white>"
+      lore-selected: "<green>Ausgewählt: %label%"
+      lore-unselected: "<yellow>Klicken: %label% auswählen"
+    # Grund-Item Texte
+    reason-item:
+      prefix-selected: "<green>✔ "
+      prefix-unselected: "<yellow>"
+      lore-selected:
+        - "<green>Ausgewählt"
+        - "<gray>Grund: <white>%reason%"
+      lore-unselected:
+        - "<yellow>Klicken zum Auswählen"
+        - "<gray>Grund: <white>%reason%"
+      selected-material: "ENCHANTED_BOOK"
+      unselected-material: "BOOK"
+
+  # ---------------- Historie ----------------
+  history-menu:
+    title: "<gradient:#9c27b0:#e91e63><bold>📜 Straf-Historie: %name%</bold></gradient>"
+    rows: 6
+    lore-status-active: "<red>✘ AKTIV"
+    lore-status-inactive: "<green>✔ Abgelaufen / Rückgängig"
+    lore-id: "<gray>#%id% <dark_gray>- <white>%type%"
+    lore-reason: "<gray>Grund: <white>%reason%"
+    lore-operator: "<gray>Von: <yellow>%name%"
+    lore-date: "<gray>Datum: <white>%date%"
+    lore-end: "<gray>Bis: %value%"
+    lore-end-permanent: "<red>PERMANENT"
+    lore-delete-hint:
+      - ""
+      - "<red><bold>SHIFT+CLICK</bold><red>: Eintrag dauerhaft löschen"
+    type-material:
+      warn: "YELLOW_BANNER"
+      kick: "IRON_BOOTS"
+      mute: "MUSIC_DISC_CHIRP"
+      tempmute: "MUSIC_DISC_CHIRP"
+      ban: "IRON_DOOR"
+      tempban: "IRON_DOOR"
+      unban: "LIME_DYE"
+      unmute: "LIME_DYE"
+
+  # ---------------- Alt Accounts ----------------
+  alt-accounts-menu:
+    title: "<gradient:#ff6f00:#ff3d00><bold>🔗 Alt-Accounts: %name%</bold></gradient>"
+    rows: 6
+    lore-ip: "<gray>IP: <white>%ip%"
+    lore-seen: "<gray>Zuletzt gesehen: <white>%date%"
+    lore-vpn: "<red>⚠️ VPN/Proxy erkannt!"
+
+  # ---------------- Chat-Steuerung ----------------
+  chat-control:
+    title: "<gradient:#4caf50:#00bcd4><bold>💬 Chat Steuerung</bold></gradient>"
+    rows: 3
+    items:
+      clear:
+        material: "BUCKET"
+        name: "<white>🪣 Chat leeren"
+        lore:
+          - "<yellow>Klicken: <white>Chat für alle leeren"
+      lock:
+        material-on: "REDSTONE_TORCH"
+        material-off: "TORCH"
+        name-on: "<red>🔒 Chat: GESPERRT"
+        name-off: "<green>🔓 Chat: FREI"
+        lore:
+          - "<gray>Aktuell: %state%"
+          - "<yellow>Klicken: Umschalten"
+      slowmode:
+        material-on: "REPEATER"
+        material-off: "COMPARATOR"
+        name-on: "<aqua>⏱️ Slowmode: AN"
+        name-off: "<gray>⏱️ Slowmode: AUS"
+        lore:
+          - "<gray>Aktuell: %state%"
+          - "<yellow>Klicken: Umschalten"
+          - "<gray>Delay: <yellow>%seconds% Sekunden"
+      staffchat:
+        material-on: "DIAMOND_SWORD"
+        material-off: "WOODEN_SWORD"
+        name-on: "<aqua>📡 Staff-Chat: DEIN DEFAULT CHAT"
+        name-off: "<gray>📡 Staff-Chat: /sc NUR MANUELL"
+        lore:
+          - "<gray>Aktuell: %state%"
+          - "<gray>Auto-Send: <yellow>%auto%"
+          - "<yellow>Klicken: Umschalten"
+
+# =====================================================
+#  Alle Nachrichten / Text-Outputs
+#  Ersetzungen: %name%, %id%, %reason%, %date%, %operator% usw.
+#  MiniMessage Syntax wird unterstützt ( <red>, <gradient> etc.)
+# =====================================================
+messages:
+  no-permission: "<red>Du hast keine Rechte dazu!"
+  player-only: "<red>Dieses Kommando kann nur als Spieler ausgeführt werden!"
+  usage-playerinfo: "<red>Benutzung: /playerinfo <Spieler>"
+  usage-staffchat: "<red>Benutzung: /sc <Nachricht>"
+  config-reloaded: "<green>Moderation Config wurde neu geladen!"
+
+  # Chat-Feedback
+  chat-locked: "<red>Chat ist aktuell GESPERRT. Bitte warte bis er freigegeben wird."
+  chat-lock-announce: "<red>🔒 Der Chat wurde gesperrt von <yellow>%by%"
+  chat-unlock-announce: "<green>🔓 Der Chat wurde freigegeben von <yellow>%by%"
+  chat-cleared: "<gray>Chat wurde geleert von <yellow>%by%"
+  slowmode-wait: "<gray>Slowmode aktiv: Bitte warte noch <yellow>%seconds%s<gray>."
+
+  # Staff Chat
+  staffchat-toggle-on: "<green>Staff-Chat jetzt für dich als DEFAULT-CHAT aktiviert. Alles was du schreibst geht nur an Staff!"
+  staffchat-toggle-off: "<gray>Staff-Chat wieder als NORMAL-MODUS. Nutze /sc <Nachricht> um Staff zu schreiben."
+
+  # Vanish
+  vanish-no-perm: "<red>Du bist nicht berechtigt, vanish zu sehen!"
+  vanish-staff-note: "<gray><i>Shift+Klick: Strafe #%id% löschen"
+
+  # Punishment Feedback
+  punishment-applied: "<green>Bestrafung angewendet: <white>%type% <gray>gegen <white>%target%"
+  punishment-deleted: "<green>Strafe #%id% (%type%) wurde gelöscht!"
+  punishment-delete-failed: "<red>Strafe #%id% konnte nicht gelöscht werden."
+  punishment-no-delete-perm: "<red>Keine Rechte zum Löschen von Strafen."
+  kick-applied: "<green>Kick durchgeführt: <white>%target%"
+  kick-offline-error: "<red>Kick nur bei Online-Spielern möglich! Spieler ist offline."
+
+  # Command: /mod
+  mod-open-selector: "<gray>Öffne Spieler-Selektor..."
+
+  # Alt Accounts
+  alt-detected-notify: "<gradient:#ff6f00:#ff3d00>⚠️ ALT-ACCOUNT</gradient> <yellow>%name% <gray>hat die gleiche IP wie <white>%other%<gray>!"
+  vpn-detected-notify: "<gradient:#9d50bb:#6e48aa>⚠️ VPN</gradient> <yellow>%name% <gray>verwendet eine VPN/Proxy IP (<white>%ip%<gray>)"
+
+  # OP Abuse
+  op-abuse-blocked: "<red>Dieser Befehl ist für OP-Spieler gesperrt!"
+  op-removed-notify: "<gradient:#e53935:#b71c1c><bold>OP REMOVED</bold></gradient> <yellow>%name% <gray>wurde automatisch de-oped (nicht in Whitelist)."
+  op-change-notify: "<gradient:#ff6f00:#ff3d00><bold>OP CHANGE</bold></gradient> <yellow>%name% <gray>wurde %state% von <white>%by%"
+  command-monitor: "<gradient:#9c27b0:#e91e63><bold>📝 CMD</bold></gradient> <gold>%name%<gray>: <white>%command%"
+
+  # PlayerInfo Status-Platzhalter
+  status-banned: "<gradient:#ff0000:#b71c1c>GEBANNT</gradient> <gray>(noch %time%)"
+  status-muted: "<gradient:#7b1fa2:#00bcd4>GEMUTET</gradient> <gray>(noch %time%)"
+  status-online: "<gradient:#56ab2f:#a8e063>ONLINE</gradient>"
+  status-offline: "<gray>OFFLINE</gray>"
+  status-vanished: "<gradient:#9d50bb:#6e48aa>VANISHED</gradient>"
+
+  # History Pages
+  history-page-info: "<white>Seite <yellow>%current%<gray>/<yellow>%max%"
+  history-page-total: "<gray>Einträge gesamt: <yellow>%total%"
+  history-prev: "<yellow>← Seite %page%"
+  history-next: "<yellow>Seite %page% →"
+  history-empty-lore: "<gray>Spieler hat noch keine Bestrafungen erhalten."
+  history-empty-name: "<green>✔ Keine Strafen gefunden"

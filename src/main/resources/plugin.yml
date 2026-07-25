@@ -1,0 +1,145 @@
+name: ModerationManager
+version: '${project.version}'
+main: net.rainbowfurry.moderationManager.ModerationManager
+api-version: '1.21'
+prefix: ModManager
+authors: [ RainbowFurry ]
+description: Umfassendes Moderation Plugin mit Alt-Account-Erkennung, Anti-Spam, DDoS-Schutz und mehr
+website: https://www.rainbowfurry.com
+
+commands:
+  ban:
+    description: Spieler permanent bannen
+    usage: /ban <player> <grund>
+    permission: moderation.ban
+  tempban:
+    description: Spieler temporär bannen
+    usage: /tempban <player> <zeit> <grund>
+    permission: moderation.tempban
+  unban:
+    description: Spieler entbannen
+    usage: /unban <player>
+    permission: moderation.unban
+  kick:
+    description: Spieler vom Server kicken
+    usage: /kick <player> <grund>
+    permission: moderation.kick
+  mute:
+    description: Spieler permanent muten
+    usage: /mute <player> <grund>
+    permission: moderation.mute
+  tempmute:
+    description: Spieler temporär muten
+    usage: /tempmute <player> <zeit> <grund>
+    permission: moderation.tempmute
+  unmute:
+    description: Spieler entmuten
+    usage: /unmute <player>
+    permission: moderation.unmute
+  warn:
+    description: Spieler verwarnen
+    usage: /warn <player> <grund>
+    permission: moderation.warn
+  playerinfo:
+    description: Spielerinformationen und Strafen anzeigen
+    usage: /playerinfo <player>
+    aliases: [pinfo]
+    permission: moderation.playerinfo
+  staffchat:
+    description: Staff Chat aktivieren/deaktivieren
+    usage: /staffchat oder /sc <nachricht>
+    aliases: [sc]
+    permission: moderation.staffchat
+  vanish:
+    description: Unsichtbar werden für andere Spieler
+    usage: /vanish
+    aliases: [v]
+    permission: moderation.vanish
+  mod:
+    description: Moderation GUI öffnen
+    usage: /mod oder /mm [player] [punish|history|alts]
+    aliases: [mm]
+    permission: moderation.mod
+  clearchat:
+    description: Chat leeren
+    usage: /clearchat oder /cc
+    aliases: [cc]
+    permission: moderation.clearchat
+  modreload:
+    description: Moderation Config neu laden
+    usage: /modreload
+    permission: moderation.reload
+
+permissions:
+  moderation.*:
+    description: Alle Moderation Rechte
+    default: op
+    children:
+      moderation.ban: true
+      moderation.tempban: true
+      moderation.unban: true
+      moderation.kick: true
+      moderation.mute: true
+      moderation.tempmute: true
+      moderation.unmute: true
+      moderation.warn: true
+      moderation.playerinfo: true
+      moderation.staffchat: true
+      moderation.vanish: true
+      moderation.vanish.see: true
+      moderation.mod: true
+      moderation.clearchat: true
+      moderation.reload: true
+      moderation.notify: true
+      moderation.bypass: true
+  moderation.ban:
+    description: Darf permanent bannen
+    default: op
+  moderation.tempban:
+    description: Darf temporär bannen
+    default: op
+  moderation.unban:
+    description: Darf entbannen
+    default: op
+  moderation.kick:
+    description: Darf kicken
+    default: op
+  moderation.mute:
+    description: Darf permanent muten
+    default: op
+  moderation.tempmute:
+    description: Darf temporär muten
+    default: op
+  moderation.unmute:
+    description: Darf entmuten
+    default: op
+  moderation.warn:
+    description: Darf verwarnen
+    default: op
+  moderation.playerinfo:
+    description: Darf Spielerinfos sehen
+    default: op
+  moderation.staffchat:
+    description: Darf Staff Chat nutzen
+    default: op
+  moderation.vanish:
+    description: Darf verschwinden
+    default: op
+  moderation.vanish.see:
+    description: Sieht unsichtbare Spieler
+    default: op
+  moderation.mod:
+    description: Darf Moderation GUI öffnen
+    default: op
+  moderation.clearchat:
+    description: Darf Chat leeren
+    default: op
+  moderation.reload:
+    description: Darf Config neu laden
+    default: op
+  moderation.notify:
+    description: Bekommt Moderationsbenachrichtigungen
+    default: op
+  moderation.bypass:
+    description: Umgeht Anti-Spam, Link-Schutz etc.
+    default: op
