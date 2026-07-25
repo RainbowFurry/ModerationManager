@@ -1,12 +1,12 @@
 # ⚖️ ModerationManager
 
-> **Minecraft Paper/Spigot Moderations-Plugin** | Version 1.0 | API: Paper 1.21+ | Java 21
+> **Minecraft Paper/Spigot Moderation Plugin** | Version 1.0 | API: Paper 1.21+ | Java 21
 
 ---
 
 <div align="center">
 
-> *Ein modernes, umfangreiches Moderations-Plugin mit GUI, Bestrafungs-System, Anti-Spam, Anti-Swear, DDoS-Schutz, Alt-Account-Erkennung, AutoMod und vielem mehr.*
+> *A modern, comprehensive moderation plugin featuring GUI menus, a full punishment system, anti-spam, anti-swear, DDoS protection, alt-account detection, AutoMod, and much more.*
 
 [![Paper](https://img.shields.io/badge/Paper-1.21%2B-FFC107?style=for-the-badge&logo=buymeacoffee&logoColor=white)]()
 [![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)]()
@@ -18,22 +18,22 @@
 
 ---
 
-## 📑 Inhaltsverzeichnis
+## 📑 Table of Contents
 
 - [✨ Features](#-features)
-- [💾 Systemvoraussetzungen](#-systemvoraussetzungen)
+- [💾 System Requirements](#-system-requirements)
 - [⬇️ Installation](#️-installation)
-- [🖥️ GUI Menüs](#️-gui-menüs)
-- [⌨️ Befehle](#️-befehle)
+- [🖥️ GUI Menus](#️-gui-menus)
+- [⌨️ Commands](#️-commands)
 - [🔐 Permissions](#-permissions)
-- [⚙️ Konfiguration](#️-konfiguration)
-  - [🤖 AutoMod (Automatischer Modus)](#-automod-automatischer-modus)
-  - [📐 GUI anpassen (Titel / Items / Texte)](#-gui-anpassen-titel--items--texte)
-  - [🚩 Straf-Gründe & Dauer-Templates hinzufügen](#-straf-gründe--dauer-templates-hinzufügen)
-  - [💬 Alle Text-Outputs anpassen](#-alle-text-outputs-anpassen)
-  - [🛡️ Schutzmechanismen im Detail](#️-schutzmechanismen-im-detail)
-- [🧩 Architektur](#-architektur)
-- [🛠️ Build-Anleitung](#️-build-anleitung)
+- [⚙️ Configuration](#️-configuration)
+  - [🤖 AutoMod (Automatic Mode)](#-automod-automatic-mode)
+  - [📐 Customize GUIs (Titles / Items / Text)](#-customize-guis-titles--items--text)
+  - [🚩 Add Punishment Reasons & Duration Templates](#-add-punishment-reasons--duration-templates)
+  - [💬 Customize All Text Outputs](#-customize-all-text-outputs)
+  - [🛡️ Protection Mechanisms in Detail](#️-protection-mechanisms-in-detail)
+- [🧩 Architecture](#-architecture)
+- [🛠️ Build Instructions](#️-build-instructions)
 - [🩺 Troubleshooting](#-troubleshooting)
 - [🗺️ Roadmap](#️-roadmap)
 - [🤝 Support](#-support)
@@ -42,264 +42,265 @@
 
 ## ✨ Features
 
-| Bereich | Funktionen |
+| Category | Features |
 |---|---|
-| **Bestrafungen** | Ban / TempBan / Mute / TempMute / Kick / Warn / Unban / Unmute — alles GUI-gesteuert oder via Commands |
-| **8 GUI Menüs** | Hauptmenü, Spieler-Selektor, Spieler-Info, Straf-Menü, Historie (blätterbar + Shift-DEL), Alt-Accounts, Chat-Steuerung, Schutz & Raid Kontrolle |
-| **🤖 AutoMod** | Zentraler Master-Switch für alle automatischen Strafen, 5 vorkonfigurierte Kategorien (Chat-Bezeichnungen, Links, Spam, Warn-Schwellwerte, VPN/Proxy), je mit einheitlichen Regeln (`at-violations`, `action`, `reason`, `duration-minutes`, `cooldown-minutes`) — **jede Kategorie einzeln an/abschaltbar** |
-| **Chat-Schutz** | Anti-Spam (Delay + Minute-Limit), Caps-Lock-Schutz (mit auto-correct), Flood-Schutz, Wiederholungs-Schutz, Slowmode, Chat-Sperre, Chat-Clear |
-| **Filter** | Beleidigungs-Schutz (Blacklist + Auto-Bestrafungen via AutoMod), Link-Schutz (Whitelist/Blacklist-Modus + IP-Links blockieren), Whitelist: youtube/twitch/discord/minecraft/curseforge/modrinth/spigot/papermc/rainbowfurry |
-| **Netzwerk-Schutz** | DDoS / Rate-Limit Joins (Connections-per-IP, Joins-per-Sec, Total-per-Min, Packet-Limit), Raid-Erkennung (Threshold + Lockdown), IP-Black/Whitelist, Temp-Block |
-| **Accounts** | Alt-Account Erkennung via IP, VPN/Proxy-Erkennung via ip-api.com (Schwellwert konfigurierbar), IP-Log pro Spieler, Auto-Ban möglich |
-| **OP Abuse Schutz** | OP Änderungs-Log, blockierte OP-Commands (stop/op/deop), OP Whitelist mit Auto-Deop, Command-Monitoring (gamemode/give/fill/summon/ban/pardon/deop/op/stop) |
-| **Staff Tools** | Staff-Chat (Toggle-Modus + Alias `/sc`), Vanish (Godmode / Unsichtbar / Keine Drops / Silent Join), Sound-Notifications für Staff |
-| **Monitoring** | Alt/VPN-Join-Notifications, IP-Change-Alerts, Raid-Alerts, OP-Change-Alerts, Command-Monitor-Alerts, Punishment-Alerts (Blocked Swear/Link/Spam) |
-| **Datenbank** | Persistente SQLite via HikariCP Connection Pooling (Thread-Safe) — Tabellen: Punishments, PlayerProfiles, IPLogs, OPLogs |
-| **International** | MiniMessage + Adventure API statt Legacy Chat-Farbcodes (Gradienten, Hover, Gradient-Tags), 100% konfigurierbare Texte & GUIs |
+| **Punishments** | Ban / TempBan / Mute / TempMute / Kick / Warn / Unban / Unmute — all GUI-driven or via commands |
+| **8 GUI Menus** | Main menu, player selector, player info, punishment menu, history (paginated + Shift-DEL), alt-accounts, chat control, protection & raid control |
+| **🤖 AutoMod** | Central master switch for all automatic punishments, 5 pre-configured categories (chat swear words, links, spam, warn thresholds, VPN/proxy), each with unified rules (`at-violations`, `action`, `reason`, `duration-minutes`, `cooldown-minutes`) — **every category can be toggled individually** |
+| **Chat Protection** | Anti-Spam (message delay + per-minute limit), Caps-Lock protection (with auto-correct), flood protection, repeat protection, slowmode, chat lock, chat clear |
+| **Filters** | Anti-Swear (blacklist + auto-punishments via AutoMod), link protection (Whitelist/Blacklist mode + IP link blocking), built-in whitelist: youtube/twitch/discord/minecraft/curseforge/modrinth/spigot/papermc/rainbowfurry |
+| **Network Protection** | DDoS / Rate-Limit joins (connections-per-IP, joins-per-sec, total-per-min, packet limit), raid detection (threshold + lockdown), IP black/whitelist, temporary block |
+| **Accounts** | Alt-account detection via IP, VPN/Proxy detection via ip-api.com (configurable threshold), per-player IP log, auto-ban possible |
+| **OP Abuse Protection** | OP change log, blocked OP commands (stop/op/deop), OP whitelist with auto-deop, command monitoring (gamemode/give/fill/summon/ban/pardon/deop/op/stop) |
+| **Staff Tools** | Staff-Chat (Toggle mode + alias `/sc`), Vanish (godmode / invisible / no drops / silent join), sound notifications for staff |
+| **Monitoring** | Alt/VPN join notifications, IP-change alerts, raid alerts, OP change alerts, command monitor alerts, punishment alerts (blocked swear/link/spam) |
+| **Database** | Persistent SQLite via HikariCP connection pooling (thread-safe) — tables: Punishments, PlayerProfiles, IPLogs, OPLogs |
+| **International** | MiniMessage + Adventure API instead of legacy chat color codes (gradients, hover, etc.), 100% configurable texts & GUIs |
 
 ---
 
-## 💾 Systemvoraussetzungen
+## 💾 System Requirements
 
-| Komponente | Mindestversion |
+| Component | Minimum Version |
 |---|---|
-| 🟡 **Server-Software** | Paper 1.21+ (empfohlen) |
+| 🟡 **Server Software** | Paper 1.21+ (recommended) |
 | ☕ **Java** | 21 (LTS) |
-| 💿 **RAM** | ≥ 1 GB (512 MB Minimum) |
-| 🗄️ **Festplatte** | ≥ 20 MB frei (Datenbank + Plugin) |
+| 💿 **RAM** | ≥ 1 GB (512 MB minimum) |
+| 🗄️ **Disk Space** | ≥ 20 MB free (database + plugin) |
 
-> ℹ️ Spigot funktioniert ebenfalls, Paper wird aber empfohlen (Performance + Adventure API nativ).
+> ℹ️ Spigot works too, but Paper is recommended (performance + native Adventure API support).
 
 ---
 
 ## ⬇️ Installation
 
-1. **JAR herunterladen** (oder selbst bauen, siehe [Build-Anleitung](#️-build-anleitung))
-2. Die Datei `moderationmanager-1.0.jar` in den `plugins/`-Ordner deines Servers legen
-3. **Server starten** — die Config wird automatisch generiert unter `plugins/ModerationManager/config.yml`
-4. (Optional) **Konfiguration anpassen** in `config.yml` (siehe [Konfiguration](#️-konfiguration))
-5. **Server neu starten** oder `/modreload` ausführen (OP oder `moderation.reload`)
+1. **Download the JAR** (or build it yourself, see [Build Instructions](#️-build-instructions))
+2. Place `moderationmanager-1.0.jar` into your server's `plugins/` folder
+3. **Start the server** — the configuration will be generated automatically at `plugins/ModerationManager/config.yml`
+4. (Optional) **Customize the configuration** in `config.yml` (see [Configuration](#️-configuration))
+5. **Restart the server** or run `/modreload` (requires OP or `moderation.reload`)
 
 ```
 server/
 ├── plugins/
 │   └── ModerationManager/
-│       ├── config.yml        ← Hauptkonfiguration
-│       └── moderation.db     ← SQLite Datenbank (wird automatisch erstellt)
+│       ├── config.yml        ← Main configuration
+│       └── moderation.db     ← SQLite database (auto-created)
 └── paper.jar
 ```
 
 ---
 
-## 🖥️ GUI Menüs
+## 🖥️ GUI Menus
 
-Das Plugin verfügt über **8 voll konfigurierbare** Inventar-Menüs — alle Titel, Materialien, Lore und Layouts können in der `config.yml` unter `gui:` angepasst werden:
+The plugin features **8 fully customizable** inventory menus — all titles, materials, lore text, and layouts can be customized in `config.yml` under the `gui:` section:
 
-| Menü | Öffnen per | Beschreibung |
+| Menu | How to Open | Description |
 |---|---|---|
-| **Hauptmenü** | `/mod` | Startpunkt mit allen Untermenüs: Spieler Verwaltung, Chat Steuerung, Schutz & Raid Kontrolle, Vanish |
-| **Spieler-Selektor** | `/mod` → Spieler Suche | Online-Spieler Köpfe (Pagination), jeder Klick öffnet PlayerInfo (oder anderes Ziel wenn von anderem Menü aufgerufen) |
-| **Spieler-Info** | `/playerinfo <Name>`, `/mod <Name>`, Selektor Klick | Profil (UUID, IP, Erster Login, Spielzeit, aktive Strafen), Statistiken, **Schnell-Aktionen** (Shift-Clicks für Warn/Kick/Mute/Ban), Unmute/Unban Buttons, Weiterleitung zu History/Alts/Punish |
-| **Straf-Menü** | `/punish <Name>`, `/mod <Name> punish`, Selektor | Schritt-für-Schritt: **Typ** (Warn/Kick/Mute/Ban) → **Dauer** (Presets aus Config) → **Grund** (Presets) → **Bestätigen** (Status-Anzeige, Validierung, disabled-Button wenn unvollständig) |
-| **Straf-Historie** | `/history <Name>`, `/mod <Name> history` | Blätterbar (Prev/Next), pro Eintrag mit Status, ID, Typ, Grund, Operator, Datum, Dauer. **SHIFT+KLICK + `moderation.punishments.delete` = Eintrag dauerhaft löschen** |
-| **Alt-Accounts** | `/alts <Name>`, `/mod <Name> alts` | Alle Accounts mit gleicher IP (Pagination), anzeigen ob VPN erkannt, IP, Zuletzt-Gesehen. Auch **globale Suche** via Hauptmenü. |
-| **Chat-Steuerung** | `/mod` → Chat Steuerung | **4 Toggles**: Clear Chat (Alle 200 Zeilen löschen für alle ohne Perm), Chat Lock/Unlock, Slowmode On/Off, StaffChat Toggle |
-| **Schutz & Raid** | `/mod` → Schutz & Raid | Lockdown-Modus an/aus, Items clear, Mobs clear, Lag-Clear (Alles in einem) |
+| **Main Menu** | `/mod` | Entry point with all submenus: player management, chat control, protection & raid control, vanish |
+| **Player Selector** | `/mod` → Player Search | Online player heads (pagination), each click opens PlayerInfo (or a custom target if invoked from another menu) |
+| **Player Info** | `/playerinfo <Name>`, `/mod <Name>`, selector click | Profile (UUID, IP, first join, playtime, active punishments), statistics, **Quick Actions** (Shift-Clicks for warn/kick/mute/ban), unmute/unban buttons, navigation to History/Alts/Punish |
+| **Punishment Menu** | `/punish <Name>`, `/mod <Name> punish`, selector | Step-by-step: **Type** (Warn/Kick/Mute/Ban) → **Duration** (presets from config) → **Reason** (presets) → **Confirm** (status display, validation, disabled button if incomplete) |
+| **Punishment History** | `/history <Name>`, `/mod <Name> history` | Paginated (prev/next), each entry with status, ID, type, reason, operator, date, duration. **SHIFT+CLICK + `moderation.punishments.delete` = permanently delete entry** |
+| **Alt Accounts** | `/alts <Name>`, `/mod <Name> alts` | All accounts sharing the same IP (pagination), shows VPN detection, IP, last-seen. Also supports **global search** via the main menu. |
+| **Chat Control** | `/mod` → Chat Control | **4 Toggles**: Clear Chat (200 lines for all players without bypass-perm), Chat Lock/Unlock, Slowmode On/Off, StaffChat Toggle |
+| **Protection & Raid** | `/mod` → Protection & Raid | Lockdown mode on/off, items clear, mobs clear, lag-clear (all-in-one) |
 
 ---
 
-## ⌨️ Befehle
+## ⌨️ Commands
 
-| Befehl | Alias | Beschreibung | Permission |
+| Command | Alias | Description | Permission |
 |---|---|---|---|
-| `/mod [Spieler] [sub]` | `/mm` | **Hauptmenü** (ohne Args) oder direkter Sprung: `/mod Steve punish` / `history` / `alts` | `moderation.mod` |
-| `/modreload` | - | Config + alle Texte neu laden | `moderation.reload` |
-| `/playerinfo <Spieler>` | `/pinfo` | Spieler-Profil anzeigen (als Spieler: GUI, als Konsole: Chat-Format. Flag `--chat` für Text-Ausgabe) | `moderation.playerinfo` |
-| `/punish <Spieler>` | - | Spieler bestrafen (öffnet Straf-GUI) | `moderation.punish` |
-| `/ban <Spieler> <Grund>` | - | **Permanent** bannen (per Command) | `moderation.ban` |
-| `/tempban <Spieler> <Zeit> <Grund>` | - | Temporär bannen, Zeit-Format: `1d`, `12h`, `30m`, `1d12h` | `moderation.tempban` |
-| `/unban <Spieler> [Grund]` | - | Spieler entbannen | `moderation.unban` |
-| `/kick <Spieler> <Grund>` | - | Spieler kicken (nur Online) | `moderation.kick` |
-| `/mute <Spieler> <Grund>` | - | **Permanent** muten | `moderation.mute` |
-| `/tempmute <Spieler> <Zeit> <Grund>` | - | Temporär muten | `moderation.tempmute` |
-| `/unmute <Spieler> [Grund]` | - | Spieler entmuten | `moderation.unmute` |
-| `/warn <Spieler> <Grund>` | - | Schnell-Verwarnung. **Achtung**: 5 aktive Warns → Auto-Mute, 10 → Auto-Ban (via AutoMod konfigurierbar!) | `moderation.warn` |
-| `/history <Spieler>` | - | Alle Strafen eines Spielers (GUI) | `moderation.history` |
-| `/staffchat [Nachricht]` | `/sc` | Staff-Nachricht senden (ohne Args: Toggle-Modus an/aus, dann geht alles automatisch ins Team) | `moderation.staffchat` |
-| `/vanish` | `/v` | Ein/Ausblenden (Godmode + keine Drops + Tablist-Ausblendung) | `moderation.vanish` |
-| `/clearchat` | `/cc` | Chat für alle ohne Bypass-Perm leeren | `moderation.clearchat` |
+| `/mod [Player] [sub]` | `/mm` | **Main Menu** (no args) or direct jump: `/mod Steve punish` / `history` / `alts` | `moderation.mod` |
+| `/modreload` | - | Reload config + all texts | `moderation.reload` |
+| `/playerinfo <Player>` | `/pinfo` | Show player profile (as player: GUI, as console: chat format. Use `--chat` flag for text output) | `moderation.playerinfo` |
+| `/punish <Player>` | - | Punish a player (opens punishment GUI) | `moderation.punish` |
+| `/ban <Player> <Reason>` | - | **Permanent** ban (via command) | `moderation.ban` |
+| `/tempban <Player> <Time> <Reason>` | - | Temporary ban, time format: `1d`, `12h`, `30m`, `1d12h` | `moderation.tempban` |
+| `/unban <Player> [Reason]` | - | Unban player | `moderation.unban` |
+| `/kick <Player> <Reason>` | - | Kick player (online only) | `moderation.kick` |
+| `/mute <Player> <Reason>` | - | **Permanent** mute | `moderation.mute` |
+| `/tempmute <Player> <Time> <Reason>` | - | Temporary mute | `moderation.tempmute` |
+| `/unmute <Player> [Reason]` | - | Unmute player | `moderation.unmute` |
+| `/warn <Player> <Reason>` | - | Quick warning. **Warning**: 5 active warns → auto-mute, 10 → auto-ban (configurable via AutoMod!) | `moderation.warn` |
+| `/history <Player>` | - | All punishments of a player (GUI) | `moderation.history` |
+| `/staffchat [Message]` | `/sc` | Send staff message (no args: toggle mode on/off, then everything goes automatically to the team) | `moderation.staffchat` |
+| `/vanish` | `/v` | Toggle vanish (godmode + no drops + hidden from tablist) | `moderation.vanish` |
+| `/clearchat` | `/cc` | Clear chat for all players without bypass-perm | `moderation.clearchat` |
 
 ### Command Syntax
 
-- **Zeit-Format** (für `/tempban`, `/tempmute`, GUI):
-  - `1d` = 1 Tag
-  - `12h` = 12 Stunden
-  - `30m` = 30 Minuten
-  - `1d12h` = 1 Tag + 12 Stunden (kompakt)
+- **Time format** (for `/tempban`, `/tempmute`, GUI):
+  - `1d` = 1 day
+  - `12h` = 12 hours
+  - `30m` = 30 minutes
+  - `1d12h` = 1 day + 12 hours (compact)
 
 ---
 
 ## 🔐 Permissions
 
-| Permission | Gewährt Zugriff auf | Default |
+| Permission | Grants Access To | Default |
 |---|---|---|
-| `moderation.*` | **ALLE** Perms (rekursiv) | OP |
-| `moderation.mod` | `/mod` Menü + Navigation | OP |
-| `moderation.admin` | Administration (kann erweitert werden) | ❌ |
-| `moderation.reload` | `/modreload` Config Reload | OP |
-| `moderation.playerinfo` | `/playerinfo` + Spieler-Info GUI | OP |
-| `moderation.punish` | `/punish` GUI + Bestrafungen erstellen | OP |
-| `moderation.punishments.delete` | **SHIFT+KLICK** in Historie → Strafen löschen | ❌ |
-| `moderation.warn` | `/warn` + Schnell-Verwarnung | OP |
-| `moderation.kick` | `/kick` + Kick-Button im GUI | OP |
+| `moderation.*` | **ALL** permissions (recursive) | OP |
+| `moderation.mod` | `/mod` menu + navigation | OP |
+| `moderation.admin` | Administration (can be extended) | ❌ |
+| `moderation.reload` | `/modreload` config reload | OP |
+| `moderation.playerinfo` | `/playerinfo` + player info GUI | OP |
+| `moderation.punish` | `/punish` GUI + create punishments | OP |
+| `moderation.punishments.delete` | **SHIFT+CLICK** in history → delete punishments | ❌ |
+| `moderation.warn` | `/warn` + quick warnings | OP |
+| `moderation.kick` | `/kick` + kick button in GUI | OP |
 | `moderation.mute` | `/mute` (permanent) | OP |
-| `moderation.tempmute` | `/tempmute` + Mute/TempMute im GUI | OP |
+| `moderation.tempmute` | `/tempmute` + Mute/TempMute in GUI | OP |
 | `moderation.ban` | `/ban` (permanent) | OP |
-| `moderation.tempban` | `/tempban` + Ban/TempBan im GUI | OP |
-| `moderation.unban` | `/unban` + Unban-Button | OP |
-| `moderation.unmute` | `/unmute` + Unmute-Button | OP |
-| `moderation.history` | `/history` + Historie einsehen | OP |
-| `moderation.staffchat` | `/sc` Staff-Chat (siehe auch Toggle-Modus) | OP |
-| `moderation.vanish` | `/vanish` unsichtbar schalten | OP |
-| `moderation.vanish.see` | Sieht vanished Spieler (auch in Tablist) | OP |
+| `moderation.tempban` | `/tempban` + Ban/TempBan in GUI | OP |
+| `moderation.unban` | `/unban` + unban button | OP |
+| `moderation.unmute` | `/unmute` + unmute button | OP |
+| `moderation.history` | `/history` + view history | OP |
+| `moderation.staffchat` | `/sc` staff chat (see also toggle mode) | OP |
+| `moderation.vanish` | `/vanish` toggle invisibility | OP |
+| `moderation.vanish.see` | See vanished players (also in tablist) | OP |
 | `moderation.clearchat` | `/clearchat` / `/cc` | OP |
-| `moderation.notify` | Erhält **alle** Staff Benachrichtigungen (Alt, VPN, Raid, IP-Change, OP, Command-Monitor, Punish, Swear/Link/Spam-Blocked) | OP |
-| `moderation.bypass` | **Universal-Bypass**: Umgeht Anti-Spam / Link-Schutz / Swear-Filter + AutoMod | OP |
-| `moderation.bypass.raid` | Darf während Lockdown / Raid-Modus joinen | OP |
-| `moderation.bypass.links` | Darf alle Links posten (auch nicht-whitelisted) | OP |
-| `moderation.bypass.spam` | Kein Anti-Spam für diesen Spieler (kein Delay, kein Count) | OP |
-| `moderation.bypass.swear` | Kein Beleidigungsfilter | OP |
-| `moderation.automod.bypass` | Spezieller AutoMod-Bypass (zusätzlich zu `moderation.bypass` + OP) | ❌ |
-| `moderation.automod.notify` | Erhält ausführliche AutoMod-Strafe-Benachrichtigungen | OP (via `staff`-Group) |
+| `moderation.notify` | Receives **all** staff notifications (Alt, VPN, Raid, IP-Change, OP, Command-Monitor, Punish, Swear/Link/Spam-Blocked) | OP |
+| `moderation.bypass` | **Universal bypass**: skips Anti-Spam / Link-Protection / Swear-Filter + AutoMod | OP |
+| `moderation.bypass.raid` | Can join during lockdown / raid mode | OP |
+| `moderation.bypass.links` | Can post all links (even non-whitelisted) | OP |
+| `moderation.bypass.spam` | No anti-spam for this player (no delay, no count) | OP |
+| `moderation.bypass.swear` | No swear filter | OP |
+| `moderation.automod.bypass` | Special AutoMod bypass (in addition to `moderation.bypass` + OP) | ❌ |
+| `moderation.automod.notify` | Receives detailed AutoMod punishment notifications | OP (via `staff` group) |
 
 ---
 
-## ⚙️ Konfiguration
+## ⚙️ Configuration
 
-Die gesamte Konfiguration liegt in **`plugins/ModerationManager/config.yml`** und ist **100% editierbar** — von einzelnen Chat-Nachrichten bis hin zu jedem einzelnen Item in den GUIs.
+All configuration is located in **`plugins/ModerationManager/config.yml`** and is **100% editable** — from individual chat messages to every single item in the GUIs.
 
-Änderungen aktivieren mit:
+Activate changes with:
 ```
 /modreload
 ```
 
 ---
 
-### 🤖 AutoMod (Automatischer Modus)
+### 🤖 AutoMod (Automatic Mode)
 
-> **Das zentrale Feature für Zeiten ohne Staff-Mitglieder online!**
+> **The central feature for times when no staff members are online!**
 
-Der AutoMod sammelt **alle** automatischen Strafen (Chat-Filter, VPN, Warn-Schwellwerte) an **einem Ort** — statt früher verteilter `violations`, `auto-punishments`, `warn-thresholds`, `vpn-autoban` pro System. EIN Master-Schalter, `auto-mod.enabled: false`, schaltet **alles** ab.
+AutoMod consolidates **all** automatic punishments (chat filters, VPN, warn thresholds) in **one place** — instead of previously scattered `violations`, `auto-punishments`, `warn-thresholds`, `vpn-autoban` per system. A single master switch, `auto-mod.enabled: false`, disables **everything**.
 
-#### Aufbau:
+#### Structure:
 ```yaml
 auto-mod:
-  enabled: true                  # MASTER-SWITCH: alles aus/an
-  operator-name: "AutoMod"       # Wer steht im Ban-Screen / Kick / Warn als "Von"?
+  enabled: true                  # MASTER SWITCH: disable/enable all
+  operator-name: "AutoMod"       # Who appears in ban screen / kick / warn as "Operator"?
   bypass-permission: "moderation.automod.bypass"
-  notify-staff: true             # Detaillierte Staff-Message bei jeder Strafe
+  notify-staff: true             # Detailed staff message on every punishment
 
   categories:
-    # Jede Kategorie einzeln an/abschaltbar + eigene rules-Liste
+    # Each category can be toggled individually + has its own rules list
     chat-swear:
       enabled: true
       rules:
-        - at-violations: 1       # Ab wie viele Verstöße diese Regel greift
+        - at-violations: 1       # Violation count when this rule triggers
           action: warn           # warn | mute | tempmute | ban | tempban | kick
-          reason: "Beleidigung"
-          duration-minutes: -1   # -1 = permanent (nur ban/mute relevant)
-          cooldown-minutes: 0    # 0 = nie wiederholen solange count passt
+          reason: "Swear word detected"
+          duration-minutes: -1   # -1 = permanent (only ban/mute relevant)
+          cooldown-minutes: 0    # 0 = never repeat as long as count matches
         - at-violations: 3
           action: mute
-          reason: "Mute nach mehrfacher Beleidigung"
+          reason: "Mute after multiple swear words"
           duration-minutes: 30
           cooldown-minutes: 0
         - at-violations: 5
           action: ban
-          reason: "Ban nach 5 Beleidigungen"
+          reason: "Ban after 5 swear violations"
           duration-minutes: 1440
           cooldown-minutes: 0
 ```
 
-#### Die 5 vorkonfigurierten Kategorien:
+#### The 5 pre-configured categories:
 
-| Kategorie | Trigger | Default-Regeln |
+| Category | Trigger | Default Rules |
 |---|---|---|
-| `chat-swear` | Anti-Swear (blockierte Nachricht) | 1× Warn → 3× Mute 30 Min → 5× Ban 1 Tag |
-| `chat-links` | Link-Schutz (Whitelist/Blacklist) | 1× Warn → 2× Mute 15 Min → 3× Ban 1 Tag |
-| `chat-spam` | Anti-Spam (Delay/Caps/Flood/Repeat) | 2× Warn → 4× Mute 10 Min → 7× Ban 1 Tag |
-| `warn-thresholds` | **Aktive Warnungen** zählen (z.B. nach `/warn` von Staff + AutoMod) | 5 Warns → Mute 30 Min (60 Min Cooldown) / 10 Warns → Ban 3 Tage |
-| `vpn` | VPN/Proxy-Erkennung (ip-api.com, Schwellwert: 70) | 1× → Ban Permanent |
+| `chat-swear` | Anti-Swear (blocked message) | 1× Warn → 3× Mute 30 min → 5× Ban 1 day |
+| `chat-links` | Link protection (Whitelist/Blacklist) | 1× Warn → 2× Mute 15 min → 3× Ban 1 day |
+| `chat-spam` | Anti-Spam (Delay/Caps/Flood/Repeat) | 2× Warn → 4× Mute 10 min → 7× Ban 1 day |
+| `warn-thresholds` | **Active warnings** count (e.g. after `/warn` by staff + AutoMod) | 5 warns → Mute 30 min (60 min cooldown) / 10 warns → Ban 3 days |
+| `vpn` | VPN/Proxy detection (ip-api.com, threshold: 70) | 1× → Ban permanent |
 
-#### Hinzufügen eigener Kategorien:
-Einfach unter `auto-mod.categories:` ergänzen und per API auslösen:
+#### Adding custom categories:
+Simply add entries under `auto-mod.categories:` and trigger via API:
 ```java
 plugin.getAutoModManager().reportViolation(player, "command-spam", "/give spam");
 plugin.getAutoModManager().triggerDirect(targetUUID, name, "illegal-items", 1, "Shulker Box Stack");
 ```
 
-#### API-Methoden in [AutoModManager](file:///c:/Users/Jasmin/IdeaProjects/ModerationManager/src/main/java/net/rainbowfurry/moderationManager/managers/AutoModManager.java):
-- `reportViolation(player, "kategorie", extra)` → Counter +1, wendet passende Regel an
-- `triggerDirect(uuid, name, "kategorie", level, extra)` → direkte Regelauswahl (VPN, Warn-Thresholds)
-- `resetViolations(playerId, "kategorie")` / `resetAllForPlayer(playerId)` / `clearCachesFor(player)`
-- `getViolationCount(playerId, "kategorie")`
+#### API methods in [AutoModManager](file:///c:/Users/Jasmin/IdeaProjects/ModerationManager/src/main/java/net/rainbowfurry/moderationManager/managers/AutoModManager.java):
+- `reportViolation(player, "category", extra)` → counter +1, applies matching rule
+- `triggerDirect(uuid, name, "category", level, extra)` → direct rule selection (VPN, warn thresholds)
+- `resetViolations(playerId, "category")` / `resetAllForPlayer(playerId)` / `clearCachesFor(player)`
+- `getViolationCount(playerId, "category")`
 
 ---
 
-### 📐 GUI anpassen (Titel / Items / Texte)
+### 📐 Customize GUIs (Titles / Items / Text)
 
-Unter `gui:` kannst du **jedes Menü bis auf die letzte Ebene** individualisieren. Unter-Sektionen pro Menü:
+Under `gui:` you can customize **each menu down to the last level**. Sub-sections per menu:
 - `gui.main-menu` (Slots 10, 13, 16, 20, 22, 24, 30, 32, 40)
-- `gui.player-selector` (Pagination, Prev/Next, Close/Back, Status Kopf Lore Online/Offline)
-- `gui.player-info` (Kopf, Stats, Punish, History, Alts, Schnell-Aktionen, Unmute/Unban, Back)
-- `gui.punish-menu` (**Typ-Buttons**: warn/kick/mute/ban, Duration-Item Texte, Reason-Item Texte, Apply-Enabled/Disabled, Reset-Button, Status-Book)
-- `gui.history-menu` (Blätterfunktion, Active/Inactive Status, Typ-Material-Mapping, Delete-Hint für Shift+Click)
-- `gui.alt-accounts-menu` (Alt-Liste mit IP/VPN)
-- `gui.chat-control` (4 Materialien On/Off pro Button, Texte On/Off, Slowmode-Delay in Lore, Auto-Status StaffChat)
-- `gui.items` (Generelle Einstellungen: Back-Arrow, Close-Barrier, Reset-Button, Apply-Button, Status-Book, Skull-Namen)
+- `gui.player-selector` (Pagination, Prev/Next, Close/Back, Status Head Lore Online/Offline)
+- `gui.player-info` (Head, Stats, Punish, History, Alts, Quick Actions, Unmute/Unban, Back)
+- `gui.punish-menu` (**Type Buttons**: warn/kick/mute/ban, Duration item texts, Reason item texts, Apply Enabled/Disabled, Reset Button, Status Book)
+- `gui.history-menu` (Pagination, Active/Inactive status, Type material mapping, Delete Hint for Shift+Click)
+- `gui.alt-accounts-menu` (Alt list with IP/VPN)
+- `gui.chat-control` (4 Materials On/Off per button, Texts On/Off, Slowmode delay in lore, Auto-Status StaffChat)
+- `gui.items` (General settings: Back Arrow, Close Barrier, Reset Button, Apply Button, Status Book, Skull Names)
 
-#### Beispiel:
+#### Example:
 ```yaml
 gui:
   fill-border-material: "GRAY_STAINED_GLASS_PANE"
   fill-glass-material: "BLACK_STAINED_GLASS_PANE"
 
   punish-menu:
-    title: "<gradient:#f44336:#ff9800><bold>⚔️ Strafen: %name%</bold></gradient>"
+    title: "<gradient:#f44336:#ff9800><bold>⚔️ Punish: %name%</bold></gradient>"
     rows: 6
     type-buttons:
       warn:
         material: "YELLOW_BANNER"
-        name: "<yellow>⚠️ Warnung"
+        name: "<yellow>⚠️ Warning"
         lore:
-          - "<gray>Verwarnung ohne Einschränkung"
+          - "<gray>Warning without restriction"
+          - "<gray>Registered in history"
 ```
 
-Alle Materialien nutzen die **Material-Enum Namen** aus Paper 1.21:
+All materials use the **Material enum names** from Paper 1.21:
 🔗 [Paper Material Javadoc](https://jd.papermc.io/paper/1.21/org/bukkit/Material.html)
 
 ---
 
-### 🚩 Straf-Gründe & Dauer-Templates hinzufügen
+### 🚩 Add Punishment Reasons & Duration Templates
 
-Unter `punishments.presets.reasons` und `punishments.presets.durations`.
+Under `punishments.presets.reasons` and `punishments.presets.durations`.
 
-#### Eigene Gründe:
+#### Custom Reasons:
 ```yaml
 punishments:
   presets:
     reasons:
-      - "Spam / Chat Missbrauch"
-      - "Beleidigung / Beleidigung anderer Spieler"
-      - "Werbung (IP / Server)"
-      - "Trolling / Team-Grief"
-      - "Bug Ausnutzung"
+      - "Spam / Chat abuse"
+      - "Insult / insulting other players"
+      - "Advertising (IP / Server)"
+      - "Trolling / Team grief"
+      - "Exploit abuse"
       - "Cheating / Hacking"
-      - "Bannumgehung / Alt-Account"
-      - "Sonstiges - siehe Notizen"
+      - "Ban evasion / Alt account"
+      - "Other - see notes"
 ```
 
-#### Eigene Dauer-Templates:
+#### Custom Duration Templates:
 ```yaml
 punishments:
   presets:
@@ -308,214 +309,214 @@ punishments:
         duration-ms: 300000
         material: "GOLD_INGOT"
       - label: "Permanent"
-        duration-ms: -1          # -1 = dauerhaft
+        duration-ms: -1          # -1 = permanent
         material: "BEDROCK"
 ```
 
-⏱️ Umrechnungshilfe: 1s = `1000`, 1m = `60000`, 1h = `3600000`, 1d = `86400000`
+⏱️ Conversion reference: 1s = `1000`, 1m = `60000`, 1h = `3600000`, 1d = `86400000`
 
 ---
 
-### 💬 Alle Text-Outputs anpassen
+### 💬 Customize All Text Outputs
 
-Unter `messages:` findest du **jede einzelne Chat-Nachricht** die das Plugin ausgibt:
+Under `messages:` you'll find **every single chat message** the plugin outputs:
 
 ```yaml
 messages:
-  no-permission: "<red>Du hast keine Rechte dazu!"
-  player-only: "<red>Dieses Kommando kann nur als Spieler ausgeführt werden!"
-  config-reloaded: "<green>Moderation Config wurde neu geladen!"
+  no-permission: "<red>You don't have permission to do that!"
+  player-only: "<red>This command can only be executed as a player!"
+  config-reloaded: "<green>Moderation config has been reloaded!"
   # ...
-  alt-detected-notify: "<gradient:#ff6f00:#ff3d00>⚠️ ALT-ACCOUNT</gradient> <yellow>%name% <gray>hat die gleiche IP wie <white>%other%<gray>!"
-  vpn-detected-notify: "<gradient:#9d50bb:#6e48aa>⚠️ VPN</gradient> <yellow>%name% <gray>verwendet eine VPN/Proxy IP (<white>%ip%<gray>)"
+  alt-detected-notify: "<gradient:#ff6f00:#ff3d00>⚠️ ALT-ACCOUNT</gradient> <yellow>%name% <gray>shares IP with <white>%other%<gray>!"
+  vpn-detected-notify: "<gradient:#9d50bb:#6e48aa>⚠️ VPN</gradient> <yellow>%name% <gray>is using VPN/Proxy IP (<white>%ip%<gray>)"
 ```
 
-#### Alle unterstützten Platzhalter `%…%`:
+#### All supported placeholders `%…%`:
 
-| Platzhalter | Beispiele (Vorkommen) |
+| Placeholder | Examples (occurrences) |
 |---|---|
-| `%name%`, `%target%`, `%player%`, `%other%` | Spielername (Staff, Ziel, Alt-Account Vergleich) |
-| `%reason%` | Grund einer Strafe |
-| `%operator%`, `%op%`, `%by%` | Wer hat ausgeführt? (Punish, Chat Lock, Clear) |
-| `%id%` | Strafe ID (Ban #123) |
-| `%type%` | Typ (BAN/TEMPMUTE/WARN/KICK) |
-| `%duration%`, `%time%`, `%label%` | Dauer (5 Min / 1 Tag / Permanent), Restzeit bei Bans |
-| `%unban_date%`, `%unmute_date%`, `%date%`, `%last_seen%` | Datums-Platzhalter |
-| `%bans%`, `%mutes%`, `%warns%`, `%kicks%`, `%count%` | Spieler-Statistiken |
-| `%message%`, `%command%` | StaffChat-Nachricht / Command-Monitor |
-| `%seconds%` | Slowmode Delay / Wartezeit |
-| `%page%`, `%current%`, `%max%`, `%total%` | Paginierung (History, AltAccounts, Selector) |
-| `%state%`, `%value%`, `%ip%`, `%uuid%` | Status On/Off, Feldwerte, IP, UUID |
-| `%anzahl%`, `%history_list%` | Spezielle PlayerInfo Platzhalter |
+| `%name%`, `%target%`, `%player%`, `%other%` | Player names (staff, target, alt-account comparison) |
+| `%reason%` | Reason for a punishment |
+| `%operator%`, `%op%`, `%by%` | Who executed it? (Punish, chat lock, clear) |
+| `%id%` | Punishment ID (Ban #123) |
+| `%type%` | Type (BAN/TEMPMUTE/WARN/KICK) |
+| `%duration%`, `%time%`, `%label%` | Duration (5 Min / 1 Day / Permanent), remaining time for bans |
+| `%unban_date%`, `%unmute_date%`, `%date%`, `%last_seen%` | Date placeholders |
+| `%bans%`, `%mutes%`, `%warns%`, `%kicks%`, `%count%` | Player statistics |
+| `%message%`, `%command%` | StaffChat message / command monitor |
+| `%seconds%` | Slowmode delay / wait time |
+| `%page%`, `%current%`, `%max%`, `%total%` | Pagination (History, AltAccounts, Selector) |
+| `%state%`, `%value%`, `%ip%`, `%uuid%` | Status On/Off, field values, IP, UUID |
+| `%anzahl%`, `%history_list%` | Special PlayerInfo placeholders |
 
 ---
 
-### 🛡️ Schutzmechanismen im Detail
+### 🛡️ Protection Mechanisms in Detail
 
 #### 1. Anti-Spam
-- `anti-spam.message-delay: 800` (Millis zwischen 2 Nachrichten)
+- `anti-spam.message-delay: 800` (millis between 2 messages)
 - `anti-spam.messages-per-minute: 6`
-- Caps-Lock: Schwellwert in %, Min-Länge, auto-correct
-- Repeat-Protection: gleiche Nachricht Max N mal
-- Flood-Protection: N gleiche Zeichen am Stück
-- → Meldungen + AutoMod `chat-spam` Regel-Triggerung
+- Caps-Lock: threshold in %, min length, auto-correct
+- Repeat Protection: same message max N times
+- Flood Protection: N same characters in a row
+- → Notifications + AutoMod `chat-spam` rule triggering
 
-#### 2. Link-Schutz
-- Modus `WHITELIST` (empfohlen) oder `BLACKLIST`
-- `block-ip-links: true` (IP:Port → blockiert, z.B. 1.1.1.1:25565)
+#### 2. Link Protection
+- Mode `WHITELIST` (recommended) or `BLACKLIST`
+- `block-ip-links: true` (IP:Port → blocked, e.g. 1.1.1.1:25565)
 - Whitelist: youtube, twitch, discord, minecraft, curseforge, modrinth, spigot, paper, rainbowfurry
 - → `chat-links` AutoMod
 
-#### 3. Beleidigungen
-- Modus `BLOCK` oder `REPLACE` mit `****`
-- Standard Blacklist: ~20 Begriffe (DE + EN)
-- Checkt zusätzlich Private-Nachrichten Commands: `msg, tell, r, w, whisper, me, say`
+#### 3. Anti-Swear
+- Mode `BLOCK` or `REPLACE` with `****`
+- Built-in blacklist: ~20 terms (DE + EN)
+- Also checks private message commands: `msg, tell, r, w, whisper, me, say`
 - → `chat-swear` AutoMod
 
-#### 4. DDoS / Join Schutz
-- `max-connections-per-ip: 3` (gleichzeitig)
+#### 4. DDoS / Join Protection
+- `max-connections-per-ip: 3` (simultaneous)
 - `joins-per-second: 1` / `total-joins-per-minute: 60`
-- Optional Packet-Rate-Limit
-- Temp-Block Default 30 Min
-- Whitelist 127.0.0.1 (für BungeeCord lokal)
+- Optional packet rate limit
+- Temp-block default 30 min
+- Whitelist 127.0.0.1 (for local BungeeCord)
 
-#### 5. Raid-Erkennung
-- Threshold `15` neue Spieler in `10` Sekunden
-- Auto-Action: `LOCKDOWN` (10 Min)
-- Ban neuer Spieler während Raid (optional)
-- Staff-Alert + Sound
+#### 5. Raid Detection
+- Threshold `15` new players in `10` seconds
+- Auto-Action: `LOCKDOWN` (10 min)
+- Ban new players during raid (optional)
+- Staff alert + sound
 
-#### 6. OP Abuse Schutz
-- OP-Änderungslog + Staff-Alert
-- Blockierte OP-Commands: stop, op, deop
-- OP-Whitelist: automatisch De-OP wenn Spieler nicht in Liste
-- Command-Monitoring: Benachrichtigung bei `gamemode`, `give`, `fill`, `summon`, `ban`, `pardon`, `op`, `deop`, `stop`
+#### 6. OP Abuse Protection
+- OP change log + staff alert
+- Blocked OP commands: stop, op, deop
+- OP whitelist: auto de-op if player not in list
+- Command monitoring: notifications for `gamemode`, `give`, `fill`, `summon`, `ban`, `pardon`, `op`, `deop`, `stop`
 
 #### 7. Alt-Account & VPN
-- Auto-Detect: Staff-Alert bei Join mit bereits bekannter IP
-- Max `3` Accounts pro IP (Standard)
-- VPN Erkennung: ip-api.com API, Schwellwert `70` (0=IP, 70+=VPN/Proxy/Hosting)
-- VPN Autoban (Standard: false, auf true via `auto-mod.categories.vpn.enabled`)
+- Auto-detect: staff alert on join with already known IP
+- Max `3` accounts per IP (default)
+- VPN detection: ip-api.com API, threshold `70` (0=residential, 70+=VPN/Proxy/Hosting)
+- VPN autoban (default: disabled, enable via `auto-mod.categories.vpn.enabled`)
 
 ---
 
-## 🧩 Architektur
+## 🧩 Architecture
 
 ```
-ModerationManager (Hauptklasse, Getter für alle Manager)
-  ├── commands/CommandManager.java              ← Alle Befehle (Ban/TempBan/Kick/Warn/Mod/Relaod etc.)
-  ├── listeners/                                 ← Event Listener
+ModerationManager (Main class, getter for all managers)
+  ├── commands/CommandManager.java              ← All commands (Ban/TempBan/Kick/Warn/Mod/Reload etc.)
+  ├── listeners/                                 ← Event listeners
   │   ├── ChatListener.java                     ← Anti-Swear/Links/Spam via ChatManager
-  │   ├── ConnectionListener.java               ← Join/Quit, Alt/VPN/Rate-Limit, Playtime Tracking
-  │   ├── MenuInventoryListener.java            ← BaseMenu Klick-Handler (GuiManager)
-  │   └── VanishListener.java                   ← Pickup/Damage/Join Cancel für vanished
-  ├── guis/                                      ← Inventar-Menüs
-  │   ├── BaseMenu.java                         ← Abstraktes Basis-Menu (createInventory, refresh, setItem, fillBorder, skull, makeItem)
-  │   ├── MainMenu.java                         ← Hauptmenü (Slots 10/13/16/20/22/24/30/32/40)
-  │   ├── PlayerSelectorMenu.java               ← Online Spieler Liste (Pagination 28/Slot)
-  │   ├── PlayerInfoMenu.java                   ← Spieler-Profil + Schnell-Aktionen + Unmute/Unban
-  │   ├── PunishMenu.java                       ← Straf-GUI (Typ→Dauer→Grund→Apply; aus Config!)
-  │   ├── HistoryMenu.java                      ← Straf-Historie (blätterbar, Shift+Click Delete)
-  │   ├── AltAccountsMenu.java                  ← Alt-Accounts pro IP (Pagination)
-  │   ├── ChatControlMenu.java                  ← Clear/Lock/Slowmode/StaffChat Toggles
+  │   ├── ConnectionListener.java               ← Join/Quit, Alt/VPN/Rate-Limit, Playtime tracking
+  │   ├── MenuInventoryListener.java            ← BaseMenu click handler (GuiManager)
+  │   └── VanishListener.java                   ← Pickup/Damage/Join cancel for vanished
+  ├── guis/                                      ← Inventory menus
+  │   ├── BaseMenu.java                         ← Abstract base menu (createInventory, refresh, setItem, fillBorder, skull, makeItem)
+  │   ├── MainMenu.java                         ← Main menu (Slots 10/13/16/20/22/24/30/32/40)
+  │   ├── PlayerSelectorMenu.java               ← Online player list (pagination 28/slot)
+  │   ├── PlayerInfoMenu.java                   ← Player profile + Quick actions + Unmute/Unban
+  │   ├── PunishMenu.java                       ← Punishment GUI (Type→Duration→Reason→Apply; from Config!)
+  │   ├── HistoryMenu.java                      ← Punishment history (paginated, Shift+Click Delete)
+  │   ├── AltAccountsMenu.java                  ← Alt accounts per IP (pagination)
+  │   ├── ChatControlMenu.java                  ← Clear/Lock/Slowmode/StaffChat toggles
   │   └── ProtectionControlMenu.java            ← Lockdown / Items-Clear / Mobs / Lag-Clear
-  ├── managers/                                  ← Business Logic (ohne Bukkit Events)
-  │   ├── ConfigManager.java                    ← 100% Getter (Config + AutoModRule/DurationPreset Records)
-  │   ├── PunishmentManager.java                ← Ban/Mute/Warn/Kick/Unban/Unmute, Check für aktive Strafen, (-> AutoMod triggerDirect für Warn-Thresholds)
-  │   ├── AutoModManager.java                   ← Automatischer Modus (reportViolation/triggerDirect/Cooldowns/Regel-Auswahl)
-  │   ├── AltAccountManager.java                ← IP-Vergleich + ip-api.com VPN-Check (-> AutoMod.triggerDirect)
+  ├── managers/                                  ← Business logic (no Bukkit events)
+  │   ├── ConfigManager.java                    ← 100% getters (Config + AutoModRule/DurationPreset records)
+  │   ├── PunishmentManager.java                ← Ban/Mute/Warn/Kick/Unban/Unmute, active punishments check (-> AutoMod triggerDirect for warn thresholds)
+  │   ├── AutoModManager.java                   ← Automatic mode (reportViolation/triggerDirect/cooldowns/rule matching)
+  │   ├── AltAccountManager.java                ← IP comparison + ip-api.com VPN check (-> AutoMod.triggerDirect)
   │   ├── ChatManager.java                      ← Anti-Spam, Swear, Links, Slowmode, Lock (-> AutoMod.reportViolation)
   │   ├── ProtectionManager.java                ← DDoS, Raid, Lockdown, Rate-Limit
-  │   ├── StaffManager.java                     ← StaffChat (Toggle-Modus!), Vanish (Toggle), Benachrichtigungen
-  │   ├── GuiManager.java                       ← Open-Menüs Registrierung, Klick-Dispatch
+  │   ├── StaffManager.java                     ← StaffChat (Toggle mode!), Vanish (Toggle), Notifications
+  │   ├── GuiManager.java                       ← Open menus registration, click dispatch
   │   └── DatabaseManager.java                  ← SQLite CRUD (PlayerProfile, Punishments, IPLogs, OPLogs)
-  ├── models/                                    ← Daten-Modelle (POJO, Records)
+  ├── models/                                    ← Data models (POJO, records)
   │   ├── Punishment.java                       ← Type enum (BAN/TEMPBAN/KICK/MUTE/TEMPMUTE/WARN/UNBAN/UNMUTE)
-  │   ├── PlayerProfile.java                    ← Stammdaten + Spielzeit + Zähler (bans/warns/kicks/mutes)
-  │   ├── IPLog.java                            ← IP-Log Eintrag (mit PlayerUUID)
-  │   └── OPLogEntry.java                       ← OP Änderungs-Eintrag
-  └── utils/                                     ← Helfer
-      ├── MessageUtils.java                     ← MiniMessage + %var% Ersetzung + formatPunishment + kickPlayer + formatDate/Playtime/Duration
+  │   ├── PlayerProfile.java                    ← Base data + Playtime + Counters (bans/warns/kicks/mutes)
+  │   ├── IPLog.java                            ← IP log entry (with PlayerUUID)
+  │   └── OPLogEntry.java                       ← OP change entry
+  └── utils/                                     ← Helpers
+      ├── MessageUtils.java                     ← MiniMessage + %var% replacement + formatPunishment + kickPlayer + formatDate/Playtime/Duration
       ├── DurationUtils.java                    ← parseDuration("1d12h"), formatDuration, formatRemaining
-      └── UUIDUtils.java                        ← UUID von Name via Mojang API (Offile-Player UUID)
+      └── UUIDUtils.java                        ← UUID from name via Mojang API (Offline Player UUID)
 ```
 
 ---
 
-## 🛠️ Build-Anleitung
+## 🛠️ Build Instructions
 
-Das Projekt nutzt **Maven** (Wrapper optional).
+This project uses **Maven** (wrapper optional).
 
 ```bash
-# 1. Repository klonen
-git clone https://github.com/<DEIN-USER>/ModerationManager.git
+# 1. Clone repository
+git clone https://github.com/<YOUR-USER>/ModerationManager.git
 cd ModerationManager
 
-# 2. Maven Build (Dependencies werden automatisch geladen)
+# 2. Maven Build (dependencies are downloaded automatically)
 mvn clean package -DskipTests
 
-# 3. Fertige JAR
-# Ziel: target/moderationmanager-1.0.jar
+# 3. Finished JAR
+# Output: target/moderationmanager-1.0.jar
 ```
 
-Oder mit Maven Wrapper (im Projekt vorhanden):
+Or with Maven Wrapper (included in the project):
 ```powershell
 # Windows (PowerShell):
 .\mvnw.cmd clean package -DskipTests
 ```
 
-#### Enthaltene Libraries (via Maven Shade in JAR hineinkompiliert):
-- 🗄️ **sqlite-jdbc 3.46.0** — SQLite Treiber
-- ⚡ **HikariCP 5.1.0** — High-Performance Connection Pool
-- 🌈 **MiniMessage / Adventure API** — Paper-nativ
-- 📊 **bStats 3.0.2** — Optionale Nutzungsstatistik (anonym, auschaltbar)
-- 🔍 **slf4j-api + slf4j-simple** — Logging Bridge für HikariCP
+#### Included Libraries (compiled into JAR via Maven Shade):
+- 🗄️ **sqlite-jdbc 3.46.0** — SQLite driver
+- ⚡ **HikariCP 5.1.0** — High-performance connection pool
+- 🌈 **MiniMessage / Adventure API** — Paper-native
+- 📊 **bStats 3.0.2** — Optional usage statistics (anonymous, toggleable)
+- 🔍 **slf4j-api + slf4j-simple** — Logging bridge for HikariCP
 
 ---
 
 ## 🩺 Troubleshooting
 
-| Problem | Lösung |
+| Problem | Solution |
 |---|---|
-| 🔴 **JAR startet nicht / NoClassDefFound** | Sicherstellen, dass Server **Java 21** nutzt und mindestens **Paper 1.21** |
-| 🔴 **Chat-Nachrichten zeigen `%reason%` statt Wert** | Prüfe, ob die Platzhalter in Config korrekt sind (`%key%` Syntax); `/modreload` nicht vergessen |
-| 🔴 **GUI öffnet sich nicht / Items fehlen** | Server-Log auf **Stack-Trace** prüfen - oft falsches Material in `config.yml` eingetragen (Enum-Namen prüfen, z.B. `RED_BANNER` statt `BANNER`) |
-| 🔴 **AutoMod greift nicht (alte Versionen)** | Alt: Legacies `anti-spam.auto-punishments`, `anti-swear.auto-punishments`, `auto-rules.warn-thresholds`, `alt-accounts.vpn-autoban` werden jetzt ALLE von `auto-mod:*` gehandhabt. Entferne diese alten Abschnitte oder aktiviere `auto-mod.enabled: true` und prüfe pro Kategorie das `enabled:` Flag |
-| 🟡 **Alt-Account Erkennung funktioniert nicht** | `alt-accounts.enabled: true` + `alt-accounts.auto-detect: true` prüfen |
-| 🟡 **bStats Meldung im Log** | Kann in config via `general.bstats: false` abgeschaltet werden |
-| 🟡 **SQLite Lock Timeout** | Prüfe Festplattenzugriffsrechte; HikariCP max-pool-size ggf. herabsetzen |
-| 🟠 **VPN Erkennung zu aggressiv / zu schwach** | `alt-accounts.vpn-threshold` anpassen (Standard 70). Höher = strikter |
-| 🟠 **Shift+Click in History löscht nichts** | Permission `moderation.punishments.delete` vergeben. |
-| 🟠 **Auto-Mod Meldungen doppelt** | Alte `notify-staff` in den Schutz-Bereichen (z.B. `alt-accounts.notify-staff-on-alt-join`) + AutoMod `notify-staff` beide aktiv. Deaktiviere in den alten Abschnitten oder überlasse es AutoMod. |
+| 🔴 **JAR doesn't start / NoClassDefFound** | Make sure the server uses **Java 21** and at least **Paper 1.21** |
+| 🔴 **Chat messages show `%reason%` instead of value** | Verify placeholders in config are correct (`%key%` syntax); don't forget `/modreload` |
+| 🔴 **GUI doesn't open / Items missing** | Check server log for **stack trace** — often incorrect Material set in `config.yml` (check enum names, e.g. `RED_BANNER` instead of `BANNER`) |
+| 🔴 **AutoMod doesn't trigger (legacy versions)** | Old scattered `anti-spam.auto-punishments`, `anti-swear.auto-punishments`, `auto-rules.warn-thresholds`, `alt-accounts.vpn-autoban` are now ALL handled by `auto-mod:*`. Remove these old sections or enable `auto-mod.enabled: true` and check the `enabled:` flag per category |
+| 🟡 **Alt-account detection doesn't work** | Check `alt-accounts.enabled: true` + `alt-accounts.auto-detect: true` |
+| 🟡 **bStats message in log** | Can be disabled in config via `general.bstats: false` |
+| 🟡 **SQLite Lock Timeout** | Check disk access permissions; consider lowering HikariCP max-pool-size |
+| 🟠 **VPN detection too aggressive / too weak** | Adjust `alt-accounts.vpn-threshold` (default 70). Higher = stricter |
+| 🟠 **Shift+Click in History deletes nothing** | Grant `moderation.punishments.delete` permission. |
+| 🟠 **Auto-Mod notifications appear twice** | Old `notify-staff` in protection sections (e.g. `alt-accounts.notify-staff-on-alt-join`) + AutoMod `notify-staff` both enabled. Disable in old sections or leave it to AutoMod. |
 
 ---
 
-## 🗺️ Roadmap / Geplante Features
+## 🗺️ Roadmap / Planned Features
 
-- [ ] **AutoMod 2.0**: GUI zur Laufzeit-Regel-Verwaltung
-- [ ] **/ignore** System (Spieler gegenseitig blockieren)
-- [ ] **Mehr AutoMod Kategorien**: Command-Spy, Illegal-Items, Grief-Prävention
-- [ ] **MySQL / PostgreSQL Support** (zusätzlich zu SQLite)
-- [ ] **PlaceholdersAPI Integration** (`%mm_bans_%player%%`, etc.)
-- [ ] **Discord Webhook** (Ban/Mute/Warn Benachrichtigungen + AutoMod Alerts)
-- [ ] **Import/Export** von Straf-Historien (JSON/SQL)
-- [ ] **Mehrsprachigkeit** (en/de/es automatisch über Spieler Locale)
+- [ ] **AutoMod 2.0**: GUI for runtime rule management
+- [ ] **/ignore** system (players can block each other)
+- [ ] **More AutoMod categories**: Command-Spy, Illegal Items, Grief Prevention
+- [ ] **MySQL / PostgreSQL support** (in addition to SQLite)
+- [ ] **PlaceholdersAPI integration** (`%mm_bans_%player%%`, etc.)
+- [ ] **Discord Webhook** (Ban/Mute/Warn notifications + AutoMod alerts)
+- [ ] **Import/Export** of punishment histories (JSON/SQL)
+- [ ] **Multilingual support** (en/de/es automatic via player locale)
 
 ---
 
 ## 🤝 Support
 
-🐛 **Bug gefunden?** Bitte einen Issue öffnen mit:
-- Server Version (`/version`)
-- Plugin Version
-- **Stack-Trace** aus latest.log
-- Schritte zum Reproduzieren
-- Auszug aus der betroffenen Config-Sektion (falls Konfigurations-Problem)
+🐛 **Found a bug?** Please open an issue including:
+- Server version (`/version`)
+- Plugin version
+- **Stack trace** from latest.log
+- Steps to reproduce
+- Excerpt from the affected config section (if configuration issue)
 
-💬 **Fragen?** Kontaktiere mich gerne:
-- Discord: *füge deinen Discord ein*
-- E-Mail: *füge deine E-Mail ein*
-- SpigotMC: *füge Resource-Seite ein*
+💬 **Questions?** Feel free to contact me:
+- Discord: *add your Discord handle here*
+- E-Mail: *add your email here*
+- SpigotMC: *add resource page here*
 - Homepage: [rainbowfurry.com](https://www.rainbowfurry.com)
 
 ---
@@ -523,7 +524,7 @@ Oder mit Maven Wrapper (im Projekt vorhanden):
 <div align="center">
 <br>
 
-> *Ein Projekt von **RainbowFurry Studios***  
+> *A project by **RainbowFurry Studios***  
 > ModerationManager — The Only Moderation Plugin You'll Ever Need.
 
 </div>
